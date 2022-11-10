@@ -2,19 +2,17 @@
 #include <unistd.h>
 
 /**
- * main - PID
+ * main - get PID and parent PID
  *
  * Return: Always 0.
  */
-pid_t getppid(void);
 int main(void)
 {
-	pid_t my_pid;
+	int pid, ppid;
 
-	my_pid = getpid();
-	printf("My pid is %u\n", my_pid);
-	my_pid = getppid();
-	printf("Again My pid is %u\n", my_pid);
+	pid = getpid();
+	printf("My Process ID is %u\n", pid);
+	ppid = getppid();
+	printf("My Parent Process ID is %u\n", ppid);
 	return (0);
 }
-
