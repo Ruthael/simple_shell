@@ -5,8 +5,8 @@
  */
 int main(void)
 {
-        ssize_t getline_bytes;
-        size_t buff_size = 0;
+	ssize_t getline_bytes;
+	size_t buff_size = 0;
 	char *entry, *args[20];
 	int count = 1, file_exists = 0, status_verify, status_builtin, exit;
 
@@ -20,11 +20,8 @@ int main(void)
 			get_args(entry, args);
 			if (args[0] != NULL)
 			{
-				/*evaluates if files exist*/
-				file_exists = exist(args[0]);
-				
-				/* if file exists*/
-				if (file_exists != 0)
+				file_exists = exist(args[0]); /*evaluates if files exist*/
+				if (file_exists != 0) /* if file exists*/
 				{
 					status_verify = verify_path(args);
 					if (status_verify == 0)
@@ -46,7 +43,7 @@ int main(void)
 				/*if file not found*/
 				else
 				{
-					exit = new_child(args);	
+					exit = new_child(args);
 					free(entry);
 				}
 			}

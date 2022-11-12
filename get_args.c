@@ -13,20 +13,19 @@ int get_args(char *entry, char **args)
 	/* Extract initial command 0 */
 	cmd = strtok(entry, "\n\t\r ");
 	/* initial cmd stored in args array*/
-	args[i] = cmd; 
-	
+	args[i] = cmd;
 	/* Execute while tokens are present */
-	while (a != NULL) 
+	while (a != NULL)
 	{
 		++i;
 		/* store nth argument in parameter*/
-		options = strtok(NULL, "\n\t\r "); 
+		options = strtok(NULL, "\n\t\r ");
 		a = options;
-		/* store parameter in array of args */ 
-		args[i] = options; 
+		/* store parameter in array of args */
+		args[i] = options;
 	}
 	/* Mark end of array by NULL */
 	args[i] = NULL;
 	/* Return the length of args[] array*/
-	return (i); 
+	return (i);
 }

@@ -1,8 +1,8 @@
 #include "main.h"
 /**
  * _strcmp - Compare 2 strings
- * @str1: String 1
- * @str2: String 2
+ * @s1: String 1
+ * @s2: String 2
  * Return: 0 if are the same, > 0 if str1 is greater, < 0 if str2 is greater
  */
 int _strcmp(char *s1, char *s2)
