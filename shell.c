@@ -13,7 +13,7 @@ int main(void)
 	entry = NULL;
 	printf("($) ");
 	getline_bytes = getline(&entry, &buff_size, stdin);
-	for (getline_bytes = 0; getline_bytes != -1; getline_bytes++)
+	while (getline_bytes != -1)
 	{
 		if (*entry != '\n')
 		{
