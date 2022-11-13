@@ -18,7 +18,7 @@ int cmd_not_found(char **args, int count)
 		write(2, shell_exe, 5);
 	}
 	write(2, ": ", 2);
-	print_numbers(count);
+	print_num(count);
 	write(2, ": ", 2);
 	write(2, args[0], _strlen(args[0]));
 	write(2, ": Not Found\n", 12);

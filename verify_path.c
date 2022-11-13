@@ -6,10 +6,10 @@
  */
 int verify_path(char **args)
 {
-	char *gp = NULL; /* global path"/usr/bin:/bin:/usr/games:/usr/local/games"*/
-	char *global_dup = NULL;
-	char *dir_path = NULL; /* " /usr/bin " */
-	char *cmd_path = NULL; /* " /usr/bin/touch "*/
+	char *gp; /* global path"/usr/bin:/bin:/usr/games:/usr/local/games"*/
+	char *global_dup;
+	char *dir_path; /* " /usr/bin " */
+	char *cmd_path; /* " /usr/bin/touch "*/
 	char *test_cph[121];
 	int file_exists = -1, i = 0;
 
@@ -31,7 +31,8 @@ int verify_path(char **args)
 	}
 	i--;
 	free(global_dup);
-	free_grid(test_cph, i);
+	/* free allocated memory used in last */
+	free_g(test_cph, i);
 	if (file_exists == 0)
 	{
 		args[0] = test_cph[i];

@@ -21,11 +21,12 @@ char *get_env(char *global_var);
 char *_strdup(char *str);
 int _strlen(const char *str);
 int new_child(char **args);
-
-int verify_builtin(char **args, int exit);
+int verify_builtin(char **args, int ext);
 int cmd_not_found(char **args, int count);
+int print_num(int num);
 void final_free(char *entry);
-
+int _putchar(char c);
+void free_g(char **g, int h);
 
 
 #endif /* _MAIN_H_ */
