@@ -1,7 +1,7 @@
 #include "main.h"
 /**
  * get_env - Get the content of a global variable
- * @global_var: Variable to extract from environ
+ * @global_var: Variable to extract from environ(environment variable)
  * Return: Pointer to the content of a variable, or NULL if fails
  */
 char *get_env(char *global_var)

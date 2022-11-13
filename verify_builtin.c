@@ -25,9 +25,9 @@ int verify_builtin(char **args, int ext)
 	}
 	if (_strcmp(blts[i], "env") == 0)
 	{
-		if (env_var == NULL)
+		if (environ == NULL)
 			return (0);
-		write(1, env_var, 1000);
+		write(1, environ, 1000);
 	}
 	return (0);
 }

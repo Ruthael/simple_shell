@@ -14,7 +14,7 @@ int new_child(char **args)
 		printf("FAILED TO CREATE CHILD! \n");
 	else if (pid == 0)/* new child process id*/
 	{
-		status_pro = execve(args[0], args, env_var);/* run the command */
+		status_pro = execve(args[0], args, environ);/* run the command */
 		if (status_pro == -1)
 		{
 			status_pro = 126;
@@ -28,6 +28,6 @@ int new_child(char **args)
 		/* stop parent process execution until child process terminates */
 		wait(&status);
 		/* macro queries the child termination status provided by the wait and waitpid functions */
-	status_pro = WEXITSTATUS(stat); /* returns the exit code specified by the child process */
+	status_pro = WEXITSTATUS(status); /* returns the exit code specified by the child process */
 	return (status_pro);
 	}

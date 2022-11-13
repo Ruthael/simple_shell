@@ -9,8 +9,8 @@ void final_free(char *ent)
 	if (isatty(STDIN_FILENO))
 	{
 		_putchar('\n');
-		free(entry);
+		free(ent);
 	}
 	if (!isatty(STDIN_FILENO))
-		free(entry);
+		free(ent);
 }
