@@ -1,9 +1,9 @@
 #include "main.h"
 /**
- * free_g - free allocated memory used previously
- * @g: pointer to grid
- * @h: Height of the grid
- */
+* free_g - free allocated memory used previously
+* @g: pointer to grid
+* @h: Height of the grid
+*/
 void free_g(char **g, int h)
 {
 	int i = 0;
@@ -18,4 +18,5 @@ void free_g(char **g, int h)
 		free(g[i]);
 		i++;
 	}
+
 }

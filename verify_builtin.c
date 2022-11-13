@@ -2,12 +2,12 @@
 /**
  * verify_builtin - verify if the input is a built-in or not
  * @args: pointer to the array of user input arguments
- * @exit: exit status
+ * @ext: exit status
  * Return: 0 if cmd is builtin, else -1
  */
 int verify_builtin(char **args, int ext)
 {
-	char *blts[2] = {"exit","env"	}; /* blts - built ins */
+	char *blts[2] = {"exit", "env"	}; /* blts - built ins */
 	int i = 0;
 
 	while (i < 2)

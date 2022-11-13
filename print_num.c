@@ -1,10 +1,9 @@
 #include "main.h"
 /**
- * print_num - prints numbers (used to print the error msg)
- * @num: number to print
- * Return: number
- */
-
+* print_num - prints numbers (used to print the error msg
+* @num: number to print
+* Return: number
+*/
 int print_num(int num)
 {
 	unsigned int n;

@@ -27,7 +27,11 @@ int new_child(char **args)
 	else
 		/* stop parent process execution until child process terminates */
 		wait(&status);
-		/* macro queries the child termination status provided by the wait and waitpid functions */
-	status_pro = WEXITSTATUS(status); /* returns the exit code specified by the child process */
+		/**
+		* macro queries the child termination status
+		* provided by the wait and waitpid functions
+		*/
+	status_pro = WEXITSTATUS(status);
+	/* returns the exit code specified by the child process */
 	return (status_pro);
 	}
