@@ -25,36 +25,21 @@ int main(void)
 				{
 					status_verify = verify_path(args);
 					if (status_verify == 0)
-					{
-						ext = new_child(args);
-						free(entry);
-						free(*args);
-					}
+					ext = new_child(args),	free(entry), free(*args);
 					else
-					{
-					status_builtin = verify_builtin(args, ext);
+					{status_builtin = verify_builtin(args, ext);
 					if (status_builtin != 0)
-					{
-						ext = cmd_not_found(args, count);
-						free(entry);
-					}
-					}
+						ext = cmd_not_found(args, count), free(entry); }
 				}
-				/*if file not found*/
-				else
-				{
-					ext = new_child(args);
-					free(entry);
-				}
+				else /*if file not found*/
+				ext = new_child(args), free(entry);
 			}
 			else
 				free(entry);
 		}
 		else if (*entry == '\n')
 			free(entry);
-		entry = NULL;
-		count++;
-		printf("($) ");
+		entry = NULL, count++, printf("($) ");
 		getline_bytes = getline(&entry, &buff_size, stdin);
 	}
 	final_free(entry);
