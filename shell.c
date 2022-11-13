@@ -8,7 +8,7 @@ int main(void)
 	ssize_t getline_bytes;
 	size_t buff_size = 0;
 	char *entry, *args[20];
-	int count = 1, file_exists = 0, status_verify, status_builtin, exit;
+	int count = 1, file_exists = 0, status_verify, status_builtin, ext;
 
 	entry = NULL;
 	printf("($) ");
@@ -26,16 +26,16 @@ int main(void)
 					status_verify = verify_path(args);
 					if (status_verify == 0)
 					{
-						exit = new_child(args);
+						ext = new_child(args);
 						free(entry);
 						free(*args);
 					}
 					else
 					{
-					status_builtin = verify_builtin(args, exit);
+					status_builtin = verify_builtin(args, ext);
 					if (status_builtin != 0)
 					{
-						exit = cmd_not_found(args, count);
+						ext = cmd_not_found(args, count);
 						free(entry);
 					}
 					}
@@ -43,7 +43,7 @@ int main(void)
 				/*if file not found*/
 				else
 				{
-					exit = new_child(args);
+					ext = new_child(args);
 					free(entry);
 				}
 			}
@@ -58,5 +58,5 @@ int main(void)
 		getline_bytes = getline(&entry, &buff_size, stdin);
 	}
 	final_free(entry);
-	return (exit);
+	return (ext);
 }
