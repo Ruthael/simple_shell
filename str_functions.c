@@ -1,10 +1,10 @@
 #include "main.h"
 /**
- * _strcmp - Compare 2 strings
- * @s1: String 1
- * @s2: String 2
- * Return: 0 if are the same, > 0 if str1 is greater, < 0 if str2 is greater
- */
+* _strcmp - Compare 2 strings
+* @s1: String 1
+* @s2: String 2
+* Return: 0 if are the same, > 0 if str1 is greater, < 0 if str2 is greater
+*/
 int _strcmp(char *s1, char *s2)
 {
 	int i;
@@ -21,10 +21,10 @@ int _strcmp(char *s1, char *s2)
 	return (0);
 }
 /**
- * _strdup - duplicates a string
- * @str: String to be duplicated
- * Return: Pointer to the duplicated string
- */
+* _strdup - duplicates a string
+* @str: String to be duplicated
+* Return: Pointer to the duplicated string
+*/
 char *_strdup(char *str)
 {
 	unsigned int i, len;
@@ -45,10 +45,10 @@ char *_strdup(char *str)
 	return (dup);
 }
 /**
- * _strlen - find length of a string
- * @str: string
- * Return: string length
- */
+* _strlen - find length of a string
+* @str: string
+* Return: string length
+*/
 int _strlen(const char *str)
 {
 	int len = 0;
