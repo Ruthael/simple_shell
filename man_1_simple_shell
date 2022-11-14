@@ -1,1 +1,11 @@
-.TH simple_shell project
+.TH Man Page for simple_shell
+
+.SH NAME
+ .B simple_shell\fR \- simple command line interpreter
+ 
+ .SH SYNOPSIS
+ .B simple_shell\fR [\fIfilename\fR]
+ 
+ .SH DESCRIPTION
+ 
+ 
