@@ -1,7 +1,17 @@
 #include "main.h"
 
+char *_getenv(const char *name);
+int _setenv(const char *name, const char *value, int overwrite);
+int _unsetenv(const char *name);
+
 extern char **environ;
 
+/**
+ * _getenv - Gets an environmental variable from the PATH.
+ * @name: The name of the environmental variable to get.
+ * Return: If the environmental variable does not exist - NULL.
+ *         Otherwise - a pointer to the environmental variable.
+ */
 char *_getenv(const char *name)
 {
 	int index;
@@ -16,6 +26,15 @@ char *_getenv(const char *name)
 	return (NULL);
 }
 
+/**
+ * _setenv - Changes or adds an environmental variable to the PATH.
+ * @name: The name of the environmental variable to change or add.
+ * @value: The value of the environmental variable to change or add.
+ * @overwrite: A flag indicating if the variable should be overwritten.
+ *
+ * Return: If an error occurs - -1.
+ *         Otherwise - 0.
+ */
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	char *env_var;
@@ -74,6 +93,13 @@ int _setenv(const char *name, const char *value, int overwrite)
 	return (0);
 }
 
+/**
+ * _unsetenv - Deletes an environmental variable from the PATH.
+ * @name: The name of the environmental variable to delete.
+ *
+ * Return: If an error occurs - -1.
+ *         Otherwise - 0.
+ */
 int _unsetenv(const char *name)
 {
 	char *env_var;

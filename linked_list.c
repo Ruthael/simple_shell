@@ -1,9 +1,21 @@
 #include "main.h"
 
-node_t *add_node_end(node_t **head, char *dir)
+list_t *add_node_end(list_t **head, char *dir);
+void free_list(list_t *head);
+list_t *get_path_dir(char *path);
+
+/**
+ * add_node_end - Adds a node to the end of a list_t linked list.
+ * @head: A pointer to the head of the list_t list.
+ * @dir: The directory path for the new node to contain.
+ *
+ * Return: If an error occurs - NULL.
+ *         Otherwise - a pointer to the new node.
+ */
+list_t *add_node_end(list_t **head, char *dir)
 {
-	node_t *new_node = malloc(sizeof(node_t));
-	node_t *last;
+	list_t *new_node = malloc(sizeof(list_t));
+	list_t *last;
 
 	if (!new_node)
 		return (NULL);
@@ -28,7 +40,7 @@ node_t *add_node_end(node_t **head, char *dir)
 
 void free_list(node_t *head)
 {
-	node_t *next;
+	list_t *next;
 
 	while (head)
 	{
@@ -39,11 +51,18 @@ void free_list(node_t *head)
 	}
 }
 
-node_t *get_path_dir(char *path)
+/**
+ * get_path_dir - Tokenizes a colon-separated list of
+ *                directories into a list_s linked list.
+ * @path: The colon-separated list of directories.
+ *
+ * Return: A pointer to the initialized linked list.
+ */
+list_t *get_path_dir(char *path)
 {
 	int index;
 	char **dirs;
-	node_t *head = NULL;
+	list_t *head = NULL;
 	dirs = _strtok(path, ":");
 	for (index = 0; dirs[index]; index++)
 		add_node_end(&head, dirs[index]);

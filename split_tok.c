@@ -1,16 +1,26 @@
 #include "main.h"
-
+/**
+ * _strtok - Tokenizes a string.
+ * @line: The string.
+ * @delim: The delimiter character to tokenize the string by.
+ *
+ * Return: A pointer to an array containing the tokenized words.
+ */
 char **_strtok(char *line, char *delim)
 {
 	char *token;
 	char **ptr;
 	int index;
-	size_t words = 0; -m
+	size_t words = 0;
 
 	for (index = 0; line[index]; index++)
 	{
-		if (line[index] != *delim && (line[index + 1] == *delim || line[index + 1] == '\0'))
-				words++;
+			if (line[index] != *delim)
+			{
+				if (line[index + 1] == *delim ||
+					line[index + 1] == '\0')
+						words++;
+			}
 	}
 	line[index - 1] = '\0';
 	ptr = malloc(sizeof(char *) * (words + 1));
@@ -19,7 +29,7 @@ char **_strtok(char *line, char *delim)
 		printf("Boom\n");
 		return (0);
 	}
-	token = strtok(line, delim);;
+	token = strtok(line, delim);
 	for (index = 0; token != NULL; index++)
 	{
 		ptr[index] = malloc(strlen(token) + 1);
