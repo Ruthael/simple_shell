@@ -11,6 +11,7 @@
 #include <signal.h>
 #include <errno.h>
 
+
 #define END_OF_FILE -2
 #define EXIT -3
 

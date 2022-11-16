@@ -6,7 +6,7 @@ int shell_help(char **args, char __attribute__((__unused__)) **front);
 int (*get_builtin(char *command))(char **args, char **front);
 /**
  * get_builtin - Matches a command with a corresponding
- *               shellby builtin function.
+ *               shell builtin function.
  * @command: The command to match.
  *
  * Return: A function pointer to the corresponding builtin.
@@ -15,9 +15,9 @@ int (*get_builtin(char *command))(char **args, char **front)
 {
 	builtin_t funcs[] = {
 		{ "exit", shell_exit },
-		{ "env", shellby_env },
-		{ "setenv", shellby_setenv },
-		{ "unsetenv", shellby_unsetenv },
+		{ "env", shell_env },
+		{ "setenv", shell_setenv },
+		{ "unsetenv", shell_unsetenv },
 		{ "cd", shell_cd },
 		{ "alias", shell_alias },
 		{ "help", shell_help },
@@ -35,7 +35,7 @@ int (*get_builtin(char *command))(char **args, char **front)
 
 /**
  * shell_exit - Causes normal process termination
- *                for the shellby shell.
+ *                for the shell shell.
  * @args: An array of arguments containing the exit value.
  * @front: A double pointer to the beginning of args.
  *
@@ -79,7 +79,7 @@ int shell_exit(char **args, char **front)
 }
 
 /**
- * shell_cd - Changes the current directory of the shellby process.
+ * shell_cd - Changes the current directory of the shell process.
  * @args: An array of arguments.
  * @front: A double pointer to the beginning of args.
  *
@@ -141,12 +141,12 @@ int shell_cd(char **args, char __attribute__((__unused__)) **front)
 
 	dir_info[0] = "OLDPWD";
 	dir_info[1] = oldpwd;
-	if (shellby_setenv(dir_info, dir_info) == -1)
+	if (shell_setenv(dir_info, dir_info) == -1)
 		return (-1);
 
 	dir_info[0] = "PWD";
 	dir_info[1] = pwd;
-	if (shellby_setenv(dir_info, dir_info) == -1)
+	if (shell_setenv(dir_info, dir_info) == -1)
 		return (-1);
 	if (args[0] && args[0][0] == '-' && args[0][1] != '-')
 	{
@@ -160,7 +160,7 @@ int shell_cd(char **args, char __attribute__((__unused__)) **front)
 }
 
 /**
- * shell_help - Displays information about shellby builtin commands.
+ * shell_help - Displays information about shell builtin commands.
  * @args: An array of arguments.
  * @front: A pointer to the beginning of args.
  *
