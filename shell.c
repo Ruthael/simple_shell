@@ -21,10 +21,16 @@ int main(int argc, char *argv[])
 		argv = clear_input(argv);
 		while (argv)
 		{
-			execute(argv);
+			command = argv[0];
+			ret = execute(argv);
+			for (index = 1; argv[index]; index++)
+				free(argv[index]);
+			free(argv);
+			free(command);
 			argv = NULL;
 			argv = clear_input(argv);
 		}
+		free(argv);
 		return (0);
 	}
 	
@@ -52,7 +58,8 @@ int main(int argc, char *argv[])
 			free(argv[index]);
 		free(argv);
 		free(line);
-		free(command)
+		free(command);
+		return (0);
 	}
 	return (ret);
 }
@@ -98,9 +105,12 @@ char **clear_input(char **argv)
 
 	read = getline(&line, &n, stdin);
 	if (read == -1)
+	{
+		free(line);
 		return (NULL);
-
+	}
 	argv = _strtok(line, " ");
-
+	
+	free(line);
 	return (argv);
 }
