@@ -1,11 +1,11 @@
-#include "shell.h"
+#include "main.h"
 
 char **_strtok(char *line, char *delim)
 {
 	char *token;
 	char **ptr;
 	int index;
-	size_t words = 0;
+	size_t words = 0; -m
 
 	for (index = 0; line[index]; index++)
 	{

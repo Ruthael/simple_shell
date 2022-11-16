@@ -1,35 +1,30 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <fcntl.h>
-#include <limits.h>
-#include <time.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 
-extern char **environ;
+typedef struct node {
+	struct node *next;
+	char *dir;
+} node_t;
 
-int _strcmp(char *s1, char *s2);
-int get_args(char *entry, char **args);
-int exist(char *path);
-int verify_path(char **args);
-char *get_env(char *global_var);
-char *_strdup(char *str);
-int _strlen(const char *str);
-int new_child(char **args);
-int verify_builtin(char **args, int ext);
-int cmd_not_found(char **args, int count);
-int print_num(int num);
-void final_free(char *entry);
-int _putchar(char c);
-void free_g(char **g, int h);
-char *cat_cmd(char *dir_path, char *cmd);
-int _printp(const char *prompt, unsigned int size);
+char **_strtok(char *line, char *delim);
+char *_getenv(const char *name);
+int _setenv(const char *name, const char *value, int overwrite);
+int _unsetenv(const char *name);
+node_t *get_path_dir(char *path);
+char *get_location(char *command);
+
+node_t *add_node_end(node_t **head, char *dir);
+void free_list(node_t *head);
 
 
-#endif /* _MAIN_H_ */
+
+#endif

@@ -5,43 +5,46 @@
  */
 int main(void)
 {
-	ssize_t getline_bytes;
-	size_t buff_size = 0;
-	char *entry, *args[20];
-	int count = 1, file_exists = 0, status_verify, status_builtin, ext;
+	pid_t child_pid;
+	int status;
+	char **argv;
+	size_t n, index;
+	ssize_t read;
+	char *line;
 
-	entry = NULL;
-	printf("($) ");
-	getline_bytes = getline(&entry, &buff_size, stdin);
-	while (getline_bytes != -1)
+	line = NULL;
+	while (1)
 	{
-		if (*entry != '\n')
+		printf("$ ");
+		n = 0;
+		if ((read = getline(&line, &n, stdin)) == -1)
 		{
-			get_args(entry, args);
-			if (args[0] != NULL)
-			{
-				file_exists = exist(args[0]); /*evaluates if files exist*/
-				if (file_exists != 0) /* if file exists*/
-				{
-					status_verify = verify_path(args);
-					if (status_verify == 0)
-					ext = new_child(args),	free(entry), free(*args);
-					else
-					{status_builtin = verify_builtin(args, ext);
-					if (status_builtin != 0)
-						ext = cmd_not_found(args, count), free(entry); }
-				}
-				else /*if file not found*/
-				ext = new_child(args), free(entry);
-			}
-			else
-				free(entry);
+			printf("read failed\n");
+			return (1);
 		}
-		else if (*entry == '\n')
-			free(entry);
-		entry = NULL, count++, printf("($) ");
-		getline_bytes = getline(&entry, &buff_size, stdin);
+		argv = _strtok(line, " ");
+		if (argv[0][0] != '/')
+			argv[0] = get_location(argv[0]);
+		child_pid = fork();
+		if (child_pid == -1)
+		{
+			perror("Error child:");
+			return (1);
+		}
+		if (child_pid == 0)
+		{
+			if (execve(argv[0], argv, NULL) == -1)
+				perror("Error exec gone wrong:");
+		}
+		else
+		{
+			wait(&status);
+		}
+		for (index = 0; argv[index]; index++)
+			free(argv[index]);
+		free(argv);
+		free(line);
+		return (0);
 	}
-	final_free(entry);
-	return (ext);
+	return (0);
 }
