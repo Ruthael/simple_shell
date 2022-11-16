@@ -29,7 +29,8 @@ void help_all(void)
 }
 
 /**
- * help_alias - Displays information on the simple_shell builtin command 'alias'.
+ * help_alias - Displays information on
+ * the simple_shell builtin command 'alias'.
  */
 void help_alias(void)
 {

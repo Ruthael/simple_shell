@@ -64,7 +64,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 		new_environ[index] = malloc(strlen(environ[index] + 1));
 		if (!new_environ[index])
 		{
-			for(index--; index >= 0; index--)
+			for (index--; index >= 0; index--)
 				free(new_environ[index]);
 			free(new_environ);
 			free(new_value);
@@ -115,7 +115,7 @@ int _unsetenv(const char *name)
 		new_environ[index2] = malloc(strlen(environ[index] + 1));
 		if (!new_environ[index2])
 		{
-			for(index2--; index2 >= 0; index2--)
+			for (index2--; index2 >= 0; index2--)
 				free(new_environ[index2]);
 			free(new_environ);
 			return (-1);
