@@ -1,72 +1,84 @@
 #include "main.h"
 
-int execute(char **argv);
-char **get_args(char **argv);
+void sig_handler(int sig);
+int execute(char **args, char *name, int hist);
+int handle_args(char *name, int *hist);
+
+/**
+ * main - simple_shell command interpreter.
+ * @argc: argument count
+ * @argv: array of arguments
+ *
+ * Return: Always 0.
+ */
+int main(int argc, char *argv[])
+{
+	int ret = 0, hist = 1;
+	char *name = argv[0];
+	signal(SIGINT, sig_handler);
+	if (argc != 1)
+		return (execute(argv + 1, name, hist));
+	if (!isatty(STDIN_FILENO))
+	{
+		while (ret == 0)
+		{
+			ret = handle_args(name, &hist);
+			if (ret == -2)
+				return (0);
+		}
+		return (ret);
+	}
+	environ = _copyenv();
+	if (!environ)
+		exit(-100);
+	while (1)
+	{
+		printf("$ ");
+		ret = handle_args(name, &hist);
+		if (ret == -2)
+		{
+			printf("\n");
+			free_env();
+			exit(0);
+		}
+	}
+	return (ret);
+}
 /**
  * main - main file of simple_shell
  * Return: 0
  */
-int main(int argc, char *argv[])
+ 
+ /**
+ * sig_handler - Prints a new prompt upon a signal.
+ * @sig: The signal.
+ */
+void sig_handler(int sig)
 {
-	int ret, hist = 1;
-	size_t index;
-	char *name;
-
-	name = argv[0];
-	if (argc != 1)
-		return (execute(argv + 1, name, hist));
-	
-	if (!isatty(STDIN_FILENO))
-	{
-		argv = get_args(argv);
-		while (argv)
-		{
-			command = argv[0];
-			ret = execute(argv);
-			for (index = 1; argv[index]; index++)
-				free(argv[index]);
-			free(argv);
-			argv = NULL;
-			argv = get_args(argv);
-		}
-		free(argv);
-		return (0);
-	}
-	
-	while (1)
-	{
-		printf("$ ");
-		argv = get_args(argv);
-		if (!argv)
-		{
-			perror("Failed to tokenize\n");
-			continue;
-		}
-		command = argv[0];
-		ret = execute(argv);
-
-		for (index = 0; argv[index]; index++)
-			free(argv[index]);
-		free(argv);
-		return (0);
-	}
-	return (ret);
+	char *new_prompt = "\n$ ";
+	(void)sig;
+	signal(SIGINT, sig_handler);
+	write(STDIN_FILENO, new_prompt, 3);
 }
-
-
-int execute(char **argv)
+/**
+ * execute - Executes a command in a child process.
+ * @args: An array of arguments.
+ * @name: The name of the call.
+ * @hist: The history number of the call.
+ *
+ * Return: If an error occurs - a corresponding error code.
+ *         O/w - The exit value of the last executed command.
+ */
+int execute(char **args, char *name, int hist)
 {
 	pid_t child_pid;
-	int status, flag = 0;
-	if (command[0] != '/')
-
-	if (command[0] != '/')
+	int status, flag = 0, ret;
+	char *command = args[0];
+	if (command[0] != '/' && command[0] != '.')
 	{
 		flag = 1;
-		argv[0] = get_location(argv[0]);
 		command = get_location(command);
 	}
-
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -77,34 +89,76 @@ int execute(char **argv)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(command, argv, NULL) == -1)
-			create_error(name, hist, argv[0], 1);
-			return (127);
+		if (!command || (access(command, F_OK) == -1))
+		{
+			if (errno == EACCES)
+				_exit(create_error(name, hist, args, 126));
+			else
+				_exit(create_error(name, hist, args, 127));
+		}
+		/*
+		if (access(command, X_OK) == -1)
+			return (create_error(name, hist, argv[0], 126));
+		*/
+		execve(command, args, NULL);
+		if (errno == EACCES)
+			_exit(create_error(name, hist, args, 126));
 	}
 	else
 	{
 		wait(&status);
+		ret = WEXITSTATUS(status);
 	}
-
 	if (flag)
 		free(command);
-	return (0);
+	return (ret);
 }
-
-char **get_args(char **argv);
+/**
+ * handle_args - Gets and calls the execution of a command.
+ * @name: The name of the call.
+ * @hist: The history number of the call.
+ *
+ * Return: If an end-of-file is read - -2.
+ *         If the input cannot be tokenized - -1.
+ *         O/w - The value of the last executed command.
+ */
+int handle_args(char *name, int *hist)
 {
-	size_t n = 0;
+	int ret;
+	size_t index = 0;
 	ssize_t read;
-	char *line = NULL;
-
-	read = getline(&line, &n, stdin);
+	char **args, *line = NULL;
+	int (*builtin)(char **argv);
+	read = getline(&line, &index, stdin);
 	if (read == -1)
 	{
 		free(line);
-		return (NULL);
+		return (-2);
 	}
-	argv = _strtok(line, " ");
-	
+	if (read == 1)
+	{
+		if (isatty(STDIN_FILENO))
+			printf("$ ");
+		free(line);
+		return (handle_args(name, hist));
+	}
+	args = _strtok(line, " ");
 	free(line);
-	return (argv);
+	if (!args)
+		return (0);
+	builtin = get_builtin(args[0]);
+	if (builtin)
+	{
+		ret = builtin(args);
+		ret = builtin(args + 1);
+		if (ret)
+			create_error(name, *hist, args, ret);
+	}
+	else
+		ret = execute(args, name, *hist);
+	(*hist)++;
+	for (index = 0; args[index]; index++)
+		free(args[index]);
+	free(args);
+	return (ret);
 }
