@@ -11,9 +11,10 @@ int main(void)
 	size_t n, index;
 	ssize_t read;
 	char *line;
+	int run = 2;
 
 	line = NULL;
-	while (1)
+	while (run)
 	{
 		printf("$ ");
 		n = 0;
@@ -50,7 +51,7 @@ int main(void)
 			free(argv[index]);
 		free(argv);
 		free(line);
-		return (0);
+		run--;
 	}
 	return (0);
 }
