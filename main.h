@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+extern char **environ;
 t/**
  * struct list_s - A new struct type defining a linked list.
  * @dir: A directory path.
