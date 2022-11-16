@@ -1,7 +1,7 @@
 #include "main.h"
 
 int execute(char **argv);
-char **clear_input(char **argv);
+char **get_args(char **argv);
 /**
  * main - main file of simple_shell
  * Return: 0
@@ -9,16 +9,16 @@ char **clear_input(char **argv);
 int main(int argc, char *argv[])
 {
 	int ret, hist = 1;
-	size_t n, index;
-	ssize_t read;
-	char *name, *line;
+	size_t index;
+	char *name;
 
+	name = argv[0];
 	if (argc != 1)
-		return (execute(argv + 1));
-
+		return (execute(argv + 1, name, hist));
+	
 	if (!isatty(STDIN_FILENO))
 	{
-		argv = clear_input(argv);
+		argv = get_args(argv);
 		while (argv)
 		{
 			command = argv[0];
@@ -27,27 +27,18 @@ int main(int argc, char *argv[])
 				free(argv[index]);
 			free(argv);
 			argv = NULL;
-			argv = clear_input(argv);
+			argv = get_args(argv);
 		}
 		free(argv);
 		return (0);
 	}
 	
-	line = NULL;
 	while (1)
 	{
 		printf("$ ");
-		n = 0;
-		read = getline(&line, &n, stdin);
-		if (read == -1)
-		{
-			perror("read failed\n");
-			return (1);
-		}
-		argv = _strtok(line, " ");
+		argv = get_args(argv);
 		if (!argv)
 		{
-			free(line);
 			perror("Failed to tokenize\n");
 			continue;
 		}
@@ -57,7 +48,6 @@ int main(int argc, char *argv[])
 		for (index = 0; argv[index]; index++)
 			free(argv[index]);
 		free(argv);
-		free(line);
 		return (0);
 	}
 	return (ret);
@@ -101,7 +91,7 @@ int execute(char **argv)
 	return (0);
 }
 
-char **clear_input(char **argv)
+char **get_args(char **argv);
 {
 	size_t n = 0;
 	ssize_t read;
