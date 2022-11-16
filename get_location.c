@@ -15,10 +15,8 @@ char *get_location(char *command)
 
 	path = _getenv("PATH");
 	if (!path)
-	{
-		free(command);
 		return (NULL);
-	}
+	
 	dirs = get_path_dir(path + 5);
 	head = dirs;
 	while (dirs)
@@ -32,13 +30,11 @@ char *get_location(char *command)
 		if (stat(temp, &st) == 0)
 		{
 			free_list(head);
-			free(command);
 			return (temp);
 		}
 		dirs = dirs->next;
 		free(temp);
 	}
-	free(command);
 	free_list(head);
 	return (NULL);
 }
