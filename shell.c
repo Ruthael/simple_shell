@@ -8,10 +8,10 @@ char **clear_input(char **argv);
  */
 int main(int argc, char *argv[])
 {
-	int ret;
+	int ret, hist = 1;
 	size_t n, index;
 	ssize_t read;
-	char *line, *command;
+	char *name, *line;
 
 	if (argc != 1)
 		return (execute(argv + 1));
@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
 			for (index = 1; argv[index]; index++)
 				free(argv[index]);
 			free(argv);
-			free(command);
 			argv = NULL;
 			argv = clear_input(argv);
 		}
@@ -48,44 +47,49 @@ int main(int argc, char *argv[])
 		argv = _strtok(line, " ");
 		if (!argv)
 		{
+			free(line);
 			perror("Failed to tokenize\n");
 			continue;
 		}
 		command = argv[0];
 		ret = execute(argv);
 
-		for (index = 1; argv[index]; index++)
+		for (index = 0; argv[index]; index++)
 			free(argv[index]);
 		free(argv);
 		free(line);
-		free(command);
 		return (0);
 	}
 	return (ret);
 }
+
+
 int execute(char **argv)
 {
 	pid_t child_pid;
 	int status, flag = 0;
+	if (command[0] != '/')
 
-	if (argv[0][0] != '/')
+	if (command[0] != '/')
 	{
 		flag = 1;
 		argv[0] = get_location(argv[0]);
+		command = get_location(command);
 	}
 
 	child_pid = fork();
 	if (child_pid == -1)
 	{
 		if (flag)
-			free(argv[0]);
+			free(command);
 		perror("Error child:");
 		return (1);
 	}
 	if (child_pid == 0)
 	{
-		if (execve(argv[0], argv, NULL) == -1)
-			perror("Error exec gone wrong:");
+		if (execve(command, argv, NULL) == -1)
+			create_error(name, hist, argv[0], 1);
+			return (127);
 	}
 	else
 	{
@@ -93,7 +97,7 @@ int execute(char **argv)
 	}
 
 	if (flag)
-		free(argv[0]);
+		free(command);
 	return (0);
 }
 
