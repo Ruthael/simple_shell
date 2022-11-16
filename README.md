@@ -43,9 +43,41 @@ hsh main.c shell.c test_ls_2
 hsh main.c shell.c test_ls_2
 $
 ```
+### Environment
+Upon invocation, **simple_shell** receives and copies the environment of the parent process in which it was executed. This environment is an array of *name-value* strings describing variables in the format *NAME=VALUE*. A few key environmental variables are:
+* **HOME**
+The home directory of the current user and the default directory argument for the **cd** builtin command.
+
+* **PWD**
+The current working directory as set by the **cd** command.
+
+* **OLDPWD**
+The previous working directory as set by the **cd** command.
+
+* **PATH**
+A colon-separated list of directories in which the shell looks for commands. A null directory name in the path (represented by any of two adjacent colons, an initial colon, or a trailing colon) indicates the current directory.
+
+### Variable Replacement
+**simple_shell** interprets the `$` character for variable replacement.
+* `$ENV_VARIABLE`
+  * `ENV_VARIABLE` is substituted with its value.
+* `$?`
+  * `?` is substitued with the return value of the last program executed.
+* `$$`
+  * The second `$` is substitued with the current process ID.
+  
+### Operators
+**simple_shell** specially interprets the following operator characters:
+* `;` - Command separator
+  * Commands separated by a `;` are executed sequentially.
+* `&&` - AND logical operator
+  * `command1 && command2`: `command2` is executed if, and only if, `command1` returns an exit status of zero.
+* `||` - OR logical operator
+  * `command1 || command2`: `command2` is executed if, and only if, `command1` returns a non-zero exit status.
+
+The operators `&&` and `||` have equal precedence, followed by `;`.
 
 ## PROJECT TASKS
-### (IN FOLDER - /Exercises)
 * ``` 0-getppid.c ``` - Prints PID of parent process ID,
 	Parent Process ID doesn't change when program executed repeatedly.
 	Echo $$ yields same value as getppid(parent PID) because $$ is defined to return the process ID of the parent in a subshell; from the man page under "Special Parameters":
@@ -65,5 +97,12 @@ man strtok
 * ``` wait.c ``` - The wait system call (man 2 wait) suspends execution of the calling process until one of its children terminates. Using the return value of fork, it is possible to know if the current process is the father or the child: fork will return 0 to the child, and the PID of the child to the father.
 * ``` fork+wait+execve.c ``` - Executes the command ``` ls -l /tmp ``` in 5 different child processes.
 
+## Authors
+* Berhane Zerabruk Desta
+<[berhanez](https://github.com/berhanez)><birhanez@gmail.com>
+* Efrata Dagnachew
+<[Ruthael](https://github.com/Ruthael)><efrata.dagnu@gmail.com>
 
+## Acknowledgements
+**simple_shell** emulates basic functionality of the **sh** shell. 
 
