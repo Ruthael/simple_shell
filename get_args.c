@@ -8,7 +8,7 @@
 int get_args(char *entry, char **args)
 {
 	int i = 0;
-	char *options, *cmd, *a = entry;
+	char *options, *a = entry, *cmd;
 
 	/* Extract initial command 0 */
 	cmd = strtok(entry, "\n\t\r ");

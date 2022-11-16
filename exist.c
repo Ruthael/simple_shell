@@ -6,12 +6,12 @@
  */
 int exist(char *path)
 {
-	int status;
+	int stats_exit;
 
-	status = (open(path, O_RDONLY));
-	if (status != -1)
+	status_exit = (open(path, O_RDONLY));
+	if (status_exit != -1)
 	{
-		close(status);
+		close(status_exit);
 		return (0);
 	}
 	else

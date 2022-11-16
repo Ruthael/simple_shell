@@ -21,7 +21,6 @@ char *get_env(char *global_var)
 			if (_strcmp(env_tok, global_var) == 0)
 			{
 				env_tok = strtok(NULL, c);
-				/**printf("%s\n", token);*/
 				env_tok_dup = _strdup(env_tok);
 				free(env_dup);
 				return (env_tok_dup);

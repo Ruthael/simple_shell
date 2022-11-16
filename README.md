@@ -52,8 +52,7 @@ $
 * ``` 1-pid_max ``` - shell script that prints the maximum value a process ID can be.
 	Invoked by "cat /proc/sys/kernel/pid_max" in a LINUX terminal.
 * ``` 0-av.c ``` - Prints all arguments without using ac
-* ``` 1-read_line.c ``` - program prints "$ ", wait for the user to enter a command then prints it on the next line.
-	Utilizes getline 
+* ``` 1-read_line.c ``` - program prints "$ ", wait for the user to enter a command then prints it on the next line. Utilizes getline
 ```
 man 3 getline
 ```

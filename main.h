@@ -11,8 +11,7 @@
 #include <limits.h>
 #include <time.h>
 
-/* environ points to an array of pointers to strings
-       called the "environment" */
+
 extern char **environ;
 
 int _strcmp(char *s1, char *s2);
@@ -30,6 +29,7 @@ void final_free(char *entry);
 int _putchar(char c);
 void free_g(char **g, int h);
 char *cat_cmd(char *dir_path, char *cmd);
+int _printp(const char *prompt, unsigned int size);
 
 
 #endif /* _MAIN_H_ */

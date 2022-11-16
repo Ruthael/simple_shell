@@ -7,11 +7,11 @@
 int new_child(char **args)
 {
 	pid_t pid;/* Child process id*/
-	int status = 0, status_pro;/* child process status indicator */
+	int status, status_pro;/* child process status indicator */
 
 	pid = fork();/*create a child process*/
 	if (pid == -1)/* fail to create child process */
-		printf("FAILED TO CREATE CHILD! \n");
+		_printp("failed\n", 7);
 	else if (pid == 0)/* new child process id*/
 	{
 		status_pro = execve(args[0], args, environ);/* run the command */

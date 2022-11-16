@@ -7,7 +7,7 @@
  */
 int verify_builtin(char **args, int ext)
 {
-	char *blts[2] = {"exit", "env"	}; /* blts - built ins */
+	char *blts[2] = {"exit", "env"}; /* blts - built ins */
 	int i = 0;
 
 	while (i < 2)
